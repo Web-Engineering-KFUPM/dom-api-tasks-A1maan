@@ -48,7 +48,7 @@ button.addEventListener("click", function () {
 const button = document.getElementById("t2-btn");
 button.addEventListener("click", function() {
     const status = document.getElementById("t2-status");
-    status.innerHTML = "You clicked the button!";
+    status.innerHTML = "Hi! My name is Almaan Khan.";
 });
 
 /*  
