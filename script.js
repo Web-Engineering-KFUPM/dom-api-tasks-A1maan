@@ -20,6 +20,10 @@ inside the <p> element with id="t1-msg".
 document.getElementById("t1-msg").innerHTML = "Hello, World!";
 */
  
+document.addEventListener("DOMContentLoaded", function() {
+    const p_tag = document.getElementById("t1-msg");
+    p_tag.innerHTML = "Hello, World!";
+});
 
 /*  
 =======================================
@@ -41,6 +45,11 @@ button.addEventListener("click", function () {
 });
 */
  
+const button = document.getElementById("t2-btn");
+button.addEventListener("click", function() {
+    const status = document.getElementById("t2-status");
+    status.innerHTML = "You clicked the button!";
+});
 
 /*  
 =======================================
@@ -69,6 +78,19 @@ data.content   // the quote text
 data.author    // the author
 */
  
+const quoteButton = document.getElementById("t3-loadQuote");
+quoteButton.addEventListener("click", async function() {
+    try {
+        const response = await fetch("https://dummyjson.com/quotes/random");
+        const data = await response.json();
+        const quote = document.getElementById("t3-quote");
+        const author = document.getElementById("t3-author");
+        quote.innerHTML = data.quote;
+        author.innerHTML = data.author;
+    } catch (error) {
+        console.error('Error fetching quote:', error);
+    }
+});
 
 /*  
 =======================================
@@ -94,3 +116,27 @@ data.main.temp      → temperature (°C)
 data.main.humidity  → humidity (%)
 data.wind.speed     → wind speed (m/s)
 */
+
+const base  = "https://api.openweathermap.org/data/2.5/weather";
+const city  = "Dammam";
+const units = "metric";
+const key   = "eaeb7748b5d3aacb9571a967d2fb56d1";
+
+// console.log("API KEY: ", key);
+
+const url = `${base}?q=${encodeURIComponent(city)}&appid=${key}&units=${units}`;
+
+const weatherButton = document.getElementById("t4-loadWx");
+weatherButton.addEventListener("click", function() {
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const temp = document.getElementById("t4-temp");
+            const hum = document.getElementById("t4-hum");
+            const wind = document.getElementById("t4-wind");
+            temp.innerHTML = `Temperature: ${data.main.temp} °C`;
+            hum.innerHTML = `Humidity: ${data.main.humidity} %`;
+            wind.innerHTML = `Wind Speed: ${data.wind.speed} m/s`;
+        })
+        .catch(error => console.error('Error fetching weather data:', error));
+});

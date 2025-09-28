@@ -2,3 +2,5 @@
 *solution.js
 *solutions.js
 node_modules/
+
+.env
